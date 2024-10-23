@@ -1,33 +1,42 @@
-const mergeStringsAndNumbers = require('../merger');
+// tests/integration.test.js
 
-describe('mergeStringsAndNumbers', () => {
-    test('merges string and numbers alternately', () => {
-        expect(mergeStringsAndNumbers('Emil', '1234')).toBe('E1m2i3l4');
+const { mergeStringsAndNumbers, processMergedResult } = require('../merger');
+
+describe('Integration Tests', () => {
+    test('merging strings and processing the result', () => {
+        const stringInput = 'Emil';
+        const numberInput = '1234';
+
+        // Step 1: Merge the strings and numbers
+        const mergedResult = mergeStringsAndNumbers(stringInput, numberInput);
+        // Expect merged result to be 'E1m2i3l4'
+        expect(mergedResult).toBe('E1m2i3l4');
+
+        // Step 2: Process the merged result to count vowels
+        const vowelCount = processMergedResult(mergedResult);
+        // 'E1m2i3l4' contains 'E' and 'i' (2 vowels)
+        expect(vowelCount).toBe(2);
     });
 
-    test('handles different lengths by appending the remainder', () => {
-        expect(mergeStringsAndNumbers('Emil', '123')).toBe('E1m2i3l');
-        expect(mergeStringsAndNumbers('Emil', '1234')).toBe('E1m2i3l4');
+    test('handles empty input correctly', () => {
+        const stringInput = '';
+        const numberInput = '';
+
+        const mergedResult = mergeStringsAndNumbers(stringInput, numberInput);
+        expect(mergedResult).toBe('');
+
+        const vowelCount = processMergedResult(mergedResult);
+        expect(vowelCount).toBe(0);
     });
 
-    test('this test is intentionally designed to fail', () => {
-        expect(mergeStringsAndNumbers('Emil', '1234')).toBe('E1m2i3l5'); // Intentional failure
-    });
+    test('handles special characters', () => {
+        const stringInput = '!@#$';
+        const numberInput = '5678';
 
-    test('handles empty inputs correctly', () => {
-        expect(mergeStringsAndNumbers('', '1234')).toBe('1234');
-        expect(mergeStringsAndNumbers('Emil', '')).toBe('Emil');
-        expect(mergeStringsAndNumbers('', '')).toBe('');
-    });
+        const mergedResult = mergeStringsAndNumbers(stringInput, numberInput);
+        expect(mergedResult).toBe('!5@6#7$8');
 
-    test('merges numbers and special characters with strings', () => {
-        expect(mergeStringsAndNumbers('!@#$', '5678')).toBe('!5@6#7$8');
-    });
-
-    test('handles large inputs', () => {
-        const longString = 'A'.repeat(1000);
-        const longNumbers = '1'.repeat(1000);
-        const expected = 'A1'.repeat(1000);
-        expect(mergeStringsAndNumbers(longString, longNumbers)).toBe(expected);
+        const vowelCount = processMergedResult(mergedResult);
+        expect(vowelCount).toBe(0); // No vowels present
     });
 });

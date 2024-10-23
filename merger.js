@@ -1,19 +1,26 @@
 // merger.js
 
-function mergeStringsAndNumbers(str1, str2) {
-    let result = '';
-    const maxLength = Math.max(str1.length, str2.length);
-
+// Function to merge strings and numbers alternately
+function mergeStringsAndNumbers(str, numStr) {
+    let merged = '';
+    const maxLength = Math.max(str.length, numStr.length);
+    
     for (let i = 0; i < maxLength; i++) {
-        if (i < str1.length) {
-            result += str1[i];
+        if (i < str.length) {
+            merged += str[i];
         }
-        if (i < str2.length) {
-            result += str2[i];
+        if (i < numStr.length) {
+            merged += numStr[i];
         }
     }
     
-    return result;
+    return merged;
 }
 
-module.exports = mergeStringsAndNumbers;
+// Function to process the merged result (example: counting vowels)
+function processMergedResult(mergedString) {
+    const vowels = mergedString.match(/[aeiou]/gi);
+    return vowels ? vowels.length : 0; // Returns the count of vowels
+}
+
+module.exports = { mergeStringsAndNumbers, processMergedResult };
