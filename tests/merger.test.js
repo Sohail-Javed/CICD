@@ -1,38 +1,31 @@
-// dynamicTestRunner.js
-const mergeStringsAndNumbers = require('./merger');
-const prompt = require('prompt-sync')();
+// tests/merger.test.js
 
-const runTests = () => {
-    const strInput = prompt('Enter a string: ');
-    const numInput = prompt('Enter numbers: ');
+const mergeStringsAndNumbers = require('../merger');
 
-    const result = mergeStringsAndNumbers(strInput, numInput);
-    console.log(`Merged Output: ${result}`);
+describe('mergeStringsAndNumbers', () => {
+    test('merges string and numbers alternately', () => {
+        expect(mergeStringsAndNumbers('Emil', '1234')).toBe('E1m2i3l4');
+    });
 
-    // Define expected outputs for test cases
-    const expectedOutput = generateExpectedOutput(strInput, numInput);
+    test('handles different lengths by appending the remainder', () => {
+        expect(mergeStringsAndNumbers('Emil', '123')).toBe('E1m2i3l');
+        expect(mergeStringsAndNumbers('Emil', '1234')).toBe('E1m2i3l4');
+    });
 
-    if (result === expectedOutput) {
-        console.log('Test Passed');
-        return true; // Passes CI
-    } else {
-        console.log('Test Failed');
-        return false; // Fails CI
-    }
-};
+    test('handles empty inputs correctly', () => {
+        expect(mergeStringsAndNumbers('', '1234')).toBe('1234');
+        expect(mergeStringsAndNumbers('Emil', '')).toBe('Emil');
+        expect(mergeStringsAndNumbers('', '')).toBe('');
+    });
 
-// Function to generate expected output based on inputs
-const generateExpectedOutput = (str, nums) => {
-    let expected = '';
-    const maxLength = Math.max(str.length, nums.length);
-    
-    for (let i = 0; i < maxLength; i++) {
-        if (i < str.length) expected += str[i];
-        if (i < nums.length) expected += nums[i];
-    }
-    
-    return expected;
-};
+    test('merges numbers and special characters with strings', () => {
+        expect(mergeStringsAndNumbers('!@#$', '5678')).toBe('!5@6#7$8');
+    });
 
-// Run tests
-runTests();
+    test('handles large inputs', () => {
+        const longString = 'A'.repeat(1000);
+        const longNumbers = '1'.repeat(1000);
+        const expected = 'A1'.repeat(1000);
+        expect(mergeStringsAndNumbers(longString, longNumbers)).toBe(expected);
+    });
+});
