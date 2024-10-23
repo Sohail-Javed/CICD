@@ -17,10 +17,6 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest  # Use a Linux virtual environment
     
-    strategy:
-      matrix:
-        node-version: 16  # Test across multiple Node.js versions
-
     steps:
       # Step 1: Check out the repository code
       - name: Checkout Code
@@ -30,7 +26,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 16  # Set Node.js version to 16
 
       # Step 3: Install dependencies
       - name: Install dependencies
