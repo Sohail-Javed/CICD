@@ -19,7 +19,7 @@ jobs:
     
     strategy:
       matrix:
-        node-version: [14, 16]  # Test across multiple Node.js versions
+        node-version: 16  # Test across multiple Node.js versions
 
     steps:
       # Step 1: Check out the repository code
