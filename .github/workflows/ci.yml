@@ -1,0 +1,35 @@
+name: Node.js CI
+
+# Define when the workflow should run
+on:
+  push:                 # Trigger the workflow when code is pushed
+    branches:
+      - main            # Specify the branch to trigger on
+  pull_request:         # Trigger when a pull request is created
+    branches:
+      - main
+  schedule:             # Run the CI on a schedule (e.g., daily at midnight)
+    - cron: '0 0 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code from the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js version
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Step 4: Run tests
+      - name: Run tests
+        run: npm test
