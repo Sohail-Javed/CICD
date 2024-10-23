@@ -5,12 +5,9 @@ on:
   push:  # Trigger the pipeline on push to specific branches
     branches:
       - main
-      - develop
   pull_request:  # Trigger the pipeline on pull request events
     branches:
       - main
-  schedule:  # Optionally trigger the pipeline on a schedule (e.g., daily at midnight)
-    - cron: '0 0 * * *'
 
 # Define the jobs that should be run as part of the pipeline
 jobs:
@@ -35,10 +32,3 @@ jobs:
       # Step 4: Run tests
       - name: Run tests
         run: npm test
-
-      # Optional: Upload test artifacts (e.g., test reports, coverage reports)
-      - name: Upload test results
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-results
-          path: ./tests/
