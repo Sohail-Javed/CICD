@@ -5,15 +5,18 @@ on:
   push:  # Trigger the pipeline on push to specific branches
     branches:
       - main
+      - develop
   pull_request:  # Trigger the pipeline on pull request events
     branches:
       - main
+  schedule:  # Optionally trigger the pipeline on a schedule (e.g., daily at midnight)
+    - cron: '0 0 * * *'
 
 # Define the jobs that should be run as part of the pipeline
 jobs:
   build-and-test:
     runs-on: ubuntu-latest  # Use a Linux virtual environment
-    
+
     steps:
       # Step 1: Check out the repository code
       - name: Checkout Code
@@ -23,7 +26,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16  # Set Node.js version to 16
+          node-version: '16'  # Set the Node.js version
 
       # Step 3: Install dependencies
       - name: Install dependencies
@@ -32,3 +35,10 @@ jobs:
       # Step 4: Run tests
       - name: Run tests
         run: npm test
+
+      # Optional: Upload test artifacts (e.g., test reports, coverage reports)
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: ./tests/
