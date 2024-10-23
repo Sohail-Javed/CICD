@@ -1,30 +1,36 @@
-name: Node.js CI
+name: CI Pipeline
 
-# Define when the workflow should run
+# Define the triggers for the pipeline
 on:
-  push:                 # Trigger the workflow when code is pushed
-    branches:
-      - main            # Specify the branch to trigger on
-  pull_request:         # Trigger when a pull request is created
+  push:  # Trigger the pipeline on push to specific branches
     branches:
       - main
-  schedule:             # Run the CI on a schedule (e.g., daily at midnight)
+      - develop
+  pull_request:  # Trigger the pipeline on pull request events
+    branches:
+      - main
+  schedule:  # Optionally trigger the pipeline on a schedule (e.g., daily at midnight)
     - cron: '0 0 * * *'
 
+# Define the jobs that should be run as part of the pipeline
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  build-and-test:
+    runs-on: ubuntu-latest  # Use a Linux virtual environment
+    
+    strategy:
+      matrix:
+        node-version: [14, 16]  # Example: Test across multiple Node.js versions
 
     steps:
-      # Step 1: Checkout the code from the repository
-      - name: Checkout repository
+      # Step 1: Check out the repository code
+      - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Step 2: Set up Node.js version
+      # Step 2: Set up the programming environment (Node.js in this case)
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: ${{ matrix.node-version }}
 
       # Step 3: Install dependencies
       - name: Install dependencies
@@ -33,3 +39,22 @@ jobs:
       # Step 4: Run tests
       - name: Run tests
         run: npm test
+
+      # Optional: Upload test artifacts (e.g., test reports, coverage reports)
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: ./tests/
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository code
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Run linting checks (ESLint in this case)
+      - name: Run Linter
+        run: npm run lint
