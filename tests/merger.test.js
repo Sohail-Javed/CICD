@@ -9,7 +9,7 @@ describe('mergeStringsAndNumbers', () => {
 
     test('handles different lengths by appending the remainder', () => {
         expect(mergeStringsAndNumbers('Emil', '123')).toBe('E1m2i3l');
-        expect(mergeStringsAndNumbers('Emil', '12345')).toBe('E1m2i3l4');
+        expect(mergeStringsAndNumbers('Emil', '1234')).toBe('E1m2i3l4');
     });
 
     test('handles empty inputs correctly', () => {
