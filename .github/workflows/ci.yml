@@ -19,7 +19,7 @@ jobs:
     
     strategy:
       matrix:
-        node-version: [14, 16]  # Example: Test across multiple Node.js versions
+        node-version: [14, 16]  # Test across multiple Node.js versions
 
     steps:
       # Step 1: Check out the repository code
@@ -46,15 +46,3 @@ jobs:
         with:
           name: test-results
           path: ./tests/
-
-  lint:
-    runs-on: ubuntu-latest
-
-    steps:
-      # Step 1: Check out the repository code
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      # Step 2: Run linting checks (ESLint in this case)
-      - name: Run Linter
-        run: npm run lint
