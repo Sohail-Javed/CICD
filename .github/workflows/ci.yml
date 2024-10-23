@@ -2,41 +2,41 @@ name: CI Pipeline
 
 # Define the triggers for the pipeline
 on:
-  push:  # Trigger the pipeline on push to specific branches
+  push:  # Trigger the pipeline on push to specific branches main or develop
     branches:
       - main
       - develop
-  pull_request:  # Trigger the pipeline on pull request events
+  pull_request:  # Trigger the pipeline on pull request events for main
     branches:
       - main
-  schedule:  # Optionally trigger the pipeline on a schedule (e.g., daily at midnight)
+  schedule:  # Optionally trigger the pipeline on a schedule (e.g., daily at midnight or setup time)
     - cron: '0 0 * * *'
 
-# Define the jobs that should be run as part of the pipeline
+# Jobs Define here
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest  # Use a Linux virtual environment
+    runs-on: ubuntu-latest  # Use a Linux virtual environment runner
 
     steps:
-      # Step 1: Check out the repository code
+      # Step 1: Check out the repository code action
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Step 2: Set up the programming environment (Node.js in this case)
+      # Step 2: Set up the programming environment (Node.js version 16)
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'  # Set the Node.js version
+          node-version: '16'  # Set the Node.js version 16
 
       # Step 3: Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # Step 4: Run tests
+      # Step 4: Run tests command
       - name: Run tests
         run: npm test
 
-      # Optional: Upload test artifacts (e.g., test reports, coverage reports)
+      # Optional: Upload test artifacts for future use. you can view artifacts in github actions (e.g., test reports, coverage reports)
       - name: Upload test results
         uses: actions/upload-artifact@v3
         with:
