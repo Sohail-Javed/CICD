@@ -4,10 +4,9 @@ CI workflow: Construct a CI environment that enables you to commit new source or
 ## Problem function
 Using a test-driven development, write 3 test cases, followed by the source code associated with the test. Examples of what it could be are : A merger of strings or numbers that merge the items in different order. e.g: for inputs "Emil" and "1234" the output could be E1m2i3l4" in node.js language.
 
-## In the assignment asked for :
+## In the assignment asked for test Cases:
 The functions do not all fit together as a single working application but you are expected to write at least 1 low-level integration test that includes 2 or more of the functions in the software. Note that low-level integration tests check the communication between functions such that the input and expected output behaviors can be measured over the series of components.
 
-## Test Cases:
 # Test Case 1: Merging strings and counting vowels
 Merges the input strings and checks that the merged result is as expected. Processes the merged result to count the number of vowels.
 
