@@ -32,7 +32,7 @@ npm init -y
 npm install jest --save-dev
 
 ## For test unit tests locally run
-npm test
+npm test 
 
 ## Run the pipeline as well by pushing code to verify that CI runs according to whether the tests pass or not.
 ```
