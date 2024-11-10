@@ -35,5 +35,6 @@ npm install jest --save-dev
 npm test 
 
 ## Run the pipeline as well by pushing code to verify that CI runs according to whether the tests pass or not.
+
 ```
 
